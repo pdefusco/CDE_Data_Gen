@@ -27,15 +27,18 @@ To deploy the demo via this automation you need:
 The automation deploys the following to your CDE Virtual Cluster:
 
 * A CDE Spark Job and associated CDE Resources with the purpose of creating synthetic data in Cloud Storage for each participant.
-* A CDE Files Resource for Spark files shared by all participants named "Spark-Files-Shared".
-* A CDE Files Resource for Airflow files shared by all participants named "Airflow-Files-Shared".
-* A CDE Python Resource shared by all participants named "Python-Env-Shared".
+* Files are written to Cloud Storage via standard Spark methods.
+
 
 ## Deployment Instructions
 
 When setup is complete navigate to the CDE UI and validate that the job run has completed successfully. This implies that the HOL data has been created successfully in Cloud Storage.
 
-Clone this repository to your machine. Then run the deployment script with:
+Clone this repository to your machine. Then run the deployment script.
+
+### Banking Example
+
+Deployment script command template:
 
 ```
 % ./setup/deploy_hol.sh <docker-user> <cdp-workload-user> <storage-location>
@@ -45,13 +48,34 @@ For example:
 
 ```
 #AWS
-% ./setup/deploy_hol.sh pauldefusco pauldefusco s3a://goes-se-sandbox01/data
+% ./banking_example/deploy_hol.sh pauldefusco pauldefusco s3a://goes-se-sandbox01/data/banking
 ```
 
 ```
 #Azure
-% ./setup/deploy_hol.sh pauldefusco pauldefusco abfs://logs@go01demoazure.dfs.core.windows.net/data
+% ./banking_example/deploy_hol.sh pauldefusco pauldefusco abfs://logs@go01demoazure.dfs.core.windows.net/data/banking
 ```
+
+### Dask Example
+
+Deployment script command template:
+
+```
+% ./dask_example/deploy_hol.sh <docker-user> <cdp-workload-user> <storage-folder-path> <storage-location>
+```
+
+For example:
+
+```
+#AWS
+% ./dask_example/deploy_hol.sh pauldefusco pauldefusco /100kcols_1Brows_1000parts_wid s3a://goes-se-sandbox01/data/dask
+```
+
+```
+#Azure
+% ./dask_example/deploy_hol.sh pauldefusco pauldefusco /100kcols_1Brows_1000parts_wid abfs://logs@go01demoazure.dfs.core.windows.net/data/dask
+```
+
 
 ## Teardown Instructions
 
