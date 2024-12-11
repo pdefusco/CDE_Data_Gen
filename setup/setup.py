@@ -52,7 +52,7 @@ def parseProperties():
     """
     try:
         print("PARSING JOB ARGUMENTS...")
-        maxParticipants = sys.argv[1]
+        username = sys.argv[1]
         storageLocation = sys.argv[2]
     except Exception as e:
         print("READING JOB ARG UNSUCCESSFUL")
@@ -60,7 +60,7 @@ def parseProperties():
         print(f'caught {type(e)}: e')
         print(e)
 
-    return maxParticipants, storageLocation
+    return username, storageLocation
 
 
 def createSparkSession():
@@ -235,31 +235,21 @@ def savePiiData(piiDf, storageLocation, username):
 
 def main():
 
-    maxParticipants, storageLocation = parseProperties()
+    username, storageLocation = parseProperties()
 
     spark = createSparkSession()
 
-    for i in range(int(maxParticipants)):
-        if i+1 < 10:
-            username = "user00" + str(i+1)
-        elif i+1 > 9 and i+1 < 99:
-            username = "user0" + str(i+1)
-        elif i+1 > 99:
-            username = "user" + str(i+1)
+    bankTransactionsDf = createTransactionData(spark)
+    saveTransactionData(bankTransactionsDf, storageLocation, username)
 
-        print("PROCESSING USER {}...\n".format(username))
+    piiDf = createPiiData(spark)
+    savePiiData(piiDf, storageLocation, username)
 
-        bankTransactionsDf = createTransactionData(spark)
-        saveTransactionData(bankTransactionsDf, storageLocation, username)
+    transactionsBatchDf = createTransactionBatch(spark)
+    saveTransactionBatch(transactionsBatchDf, storageLocation, username)
 
-        piiDf = createPiiData(spark)
-        savePiiData(piiDf, storageLocation, username)
-
-        transactionsBatchDf = createTransactionBatch(spark)
-        saveTransactionBatch(transactionsBatchDf, storageLocation, username)
-
-        secondTransactionsBatchDf = createSecondTransactionBatch(spark)
-        saveSecondTransactionBatch(secondTransactionsBatchDf, storageLocation, username)
+    secondTransactionsBatchDf = createSecondTransactionBatch(spark)
+    saveSecondTransactionBatch(secondTransactionsBatchDf, storageLocation, username)
 
 
 if __name__ == "__main__":

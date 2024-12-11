@@ -45,12 +45,12 @@ For example:
 
 ```
 #AWS
-% ./setup/deploy_hol.sh pauldefusco pauldefusco 3 s3a://goes-se-sandbox01/data
+% ./setup/deploy_hol.sh pauldefusco pauldefusco s3a://goes-se-sandbox01/data
 ```
 
 ```
 #Azure
-% ./setup/deploy_hol.sh pauldefusco pauldefusco 3 abfs://logs@go01demoazure.dfs.core.windows.net/data
+% ./setup/deploy_hol.sh pauldefusco pauldefusco abfs://logs@go01demoazure.dfs.core.windows.net/data
 ```
 
 ## Teardown Instructions
