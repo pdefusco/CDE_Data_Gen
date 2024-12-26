@@ -48,7 +48,7 @@ For example:
 
 ```
 #AWS
-% ./banking_example/deploy_hol.sh pauldefusco pauldefusco s3a://goes-se-sandbox01/data/banking
+% ./banking_example/deploy_hol.sh pauldefusco pauldefusco s3a://goes-se-sandbox/data/banking
 ```
 
 ```
@@ -68,7 +68,7 @@ For example:
 
 ```
 #AWS
-% ./dask_example/deploy_hol.sh pauldefusco pauldefusco /100kcols_1Brows_1000parts_wid s3a://goes-se-sandbox01/data/dask
+% ./dask_example/deploy_hol.sh pauldefusco pauldefusco /100kcols_1Brows_1000parts_wid s3a://goes-se-sandbox/data/dask
 ```
 
 ```

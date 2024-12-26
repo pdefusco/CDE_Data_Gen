@@ -39,8 +39,8 @@ cde resource create \
   --type files
 cde resource upload \
   --name datagen-setup-$cde_user \
-  --local-path setup/utils.py \
-  --local-path setup/setup.py
+  --local-path banking_example/utils.py \
+  --local-path banking_example/setup.py
 
 echo "CREATE AND RUN SETUP JOB"
 cde job create \

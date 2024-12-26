@@ -41,6 +41,8 @@ cde resource create \
 cde resource upload \
   --name datagen-setup-$cde_user \
   --local-path dask_example/setup.py
+  --local-path dask_example/utils.py
+
 
 echo "CREATE AND RUN SETUP JOB"
 cde job create \

@@ -44,55 +44,32 @@ import dbldatagen as dg
 from dbldatagen import DataGenerator
 from pyspark.sql import SparkSession
 import sys, random, os, json, random, configparser
-from utils import *
 from pyspark.sql.types import LongType, FloatType, IntegerType, StringType, \
                               DoubleType, BooleanType, ShortType, \
                               TimestampType, DateType, DecimalType, \
                               ByteType, BinaryType, ArrayType, MapType, \
                               StructType, StructField
 
-def main():
-    ## CDE PROPERTIES
-    print("PARSING JOB ARGUMENTS...")
-    path = sys.argv[1]
-    storageLocation = sys.argv[2]
-    print("DATA LOCATION IN CLOUD STORAGE:")
-    print(storageLocation + path)
+class DataGen:
 
-    try:
-        spark = SparkSession \
-            .builder \
-            .appName("DATA GENERATION") \
-            .getOrCreate()
-    except Exception as e:
-        print("LAUNCHING SPARK SESSION UNSUCCESSFUL")
-        print('\n')
-        print(f'caught {type(e)}: e')
-        print(e)
+    '''Class to Generate Banking Data'''
 
-    try:
-        myDG = DataGen(spark)
-        print("DATAGEN CLASS INSTANTIATED SUCCESSFULLY")
-        sparkDf = myDG.dataGen()
-        print("DATA GENERATED SUCCESSFULLY")
-        print("SHOW GENERATED DATA:\n")
-        sparkDf.show()
-    except Exception as e:
-        print("INSTANTIATING DATAGEN UNSUCCESSFUL")
-        print('\n')
-        print(f'caught {type(e)}: e')
-        print(e)
+    def __init__(self, spark):
+        self.spark = spark
 
-    try:
-        sparkDf.write.format("parquet").mode("overwrite").save(storageLocation + path)
-        print("DATA SAVED TO CLOUD STORAGE SUCCESSFULLY")
-    except Exception as e:
-        print("SAVING DATAGEN DF UNSUCCESSFUL")
-        print('\n')
-        print(f'caught {type(e)}: e')
-        print(e)
+    def dataGen(self, shuffle_partitions_requested = 1000, partitions_requested = 1000, data_rows = 1000000000):
 
-    #transactionsDf.write.format("json").mode("overwrite").save("/home/cdsw/jsonData2.json")
+        # partition parameters etc.
+        self.spark.conf.set("spark.sql.shuffle.partitions", shuffle_partitions_requested)
 
-if __name__ == "__main__":
-    main()
+        dataSpec = (DataGenerator(self.spark, rows=data_rows, partitions=partitions_requested)
+                    .withColumn("unique_id", "string", minValue=1, maxValue=500000, step=1, prefix='ID', random=True)
+                    .withColumn("col1", values=["A", "B", "C", "D", "E", "F", "G"]))
+
+        for i in range(2, 100000):
+            col_n = f"col{i}"
+            dataSpec = dataSpec.withColumn(col_n, "float", minValue=1, maxValue=10000000, random=True)
+
+        df = dataSpec.build()
+
+        return df
