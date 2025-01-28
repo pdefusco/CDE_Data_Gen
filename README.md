@@ -61,19 +61,19 @@ For example:
 Deployment script command template:
 
 ```
-% ./dask_example/deploy_hol.sh <docker-user> <cdp-workload-user> <storage-folder-path> <storage-location>
+% ./dask_example/deploy_hol.sh <docker-user> <cdp-workload-user> <storage-location>
 ```
 
 For example:
 
 ```
 #AWS
-% ./dask_example/deploy_hol.sh pauldefusco pauldefusco /100kcols_1Brows_1000parts_wid s3a://goes-se-sandbox/data/dask
+% ./dask_example/deploy_hol.sh pauldefusco pauldefusco s3a://goes-se-sandbox/data/dask/100kcols_1Brows_1000parts_wid
 ```
 
 ```
 #Azure
-% ./dask_example/deploy_hol.sh pauldefusco pauldefusco /100kcols_1Brows_1000parts_wid abfs://logs@go01demoazure.dfs.core.windows.net/data/dask
+% ./dask_example/deploy_hol.sh pauldefusco pauldefusco abfs://logs@go01demoazure.dfs.core.windows.net/data/dask/100kcols_1Brows_1000parts_wid
 ```
 
 

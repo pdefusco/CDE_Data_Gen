@@ -54,10 +54,9 @@ from pyspark.sql.types import LongType, FloatType, IntegerType, StringType, \
 def main():
     ## CDE PROPERTIES
     print("PARSING JOB ARGUMENTS...")
-    path = sys.argv[1]
-    storageLocation = sys.argv[2]
+    storageLocation = sys.argv[1]
     print("DATA LOCATION IN CLOUD STORAGE:")
-    print(storageLocation + path)
+    print(storageLocation)
 
     try:
         spark = SparkSession \
@@ -84,7 +83,7 @@ def main():
         print(e)
 
     try:
-        sparkDf.write.format("parquet").mode("overwrite").save(storageLocation + path)
+        sparkDf.write.format("parquet").mode("overwrite").save(storageLocation)
         print("DATA SAVED TO CLOUD STORAGE SUCCESSFULLY")
     except Exception as e:
         print("SAVING DATAGEN DF UNSUCCESSFUL")

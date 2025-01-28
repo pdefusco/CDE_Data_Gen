@@ -2,8 +2,7 @@
 
 docker_user=$1
 cde_user=$2
-path=$3
-cdp_data_lake_storage=$4
+cdp_data_lake_storage=$3
 
 cde_user_formatted=${cde_user//[-._]/}
 d=$(date)
@@ -40,7 +39,7 @@ cde resource create \
   --type files
 cde resource upload \
   --name datagen-setup-$cde_user \
-  --local-path dask_example/setup.py
+  --local-path dask_example/setup.py \
   --local-path dask_example/utils.py
 
 
@@ -53,7 +52,6 @@ cde job create \
   --runtime-image-resource-name dex-spark-runtime-$cde_user
 cde job run \
   --name datagen-setup-$cde_user \
-  --arg $path \
   --arg $cdp_data_lake_storage \
   --executor-cores 5 \
   --executor-memory "8g"
