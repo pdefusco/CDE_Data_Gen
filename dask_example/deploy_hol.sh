@@ -53,8 +53,10 @@ cde job create \
 cde job run \
   --name datagen-setup-$cde_user \
   --arg $cdp_data_lake_storage \
+  --driver-cores 4 \
+  --driver-memory "10g" \
   --executor-cores 5 \
-  --executor-memory "8g"
+  --executor-memory "20g"
 
 function loading_icon_job() {
   local loading_animation=( '—' "\\" '|' '/' )

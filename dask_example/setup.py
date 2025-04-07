@@ -74,8 +74,8 @@ def main():
         print("DATAGEN CLASS INSTANTIATED SUCCESSFULLY")
         sparkDf = myDG.dataGen()
         print("DATA GENERATED SUCCESSFULLY")
-        print("SHOW GENERATED DATA:\n")
-        sparkDf.show()
+        #print("SHOW GENERATED DATA:\n")
+        #sparkDf.show()
     except Exception as e:
         print("INSTANTIATING DATAGEN UNSUCCESSFUL")
         print('\n')
