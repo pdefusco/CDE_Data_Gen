@@ -57,6 +57,24 @@ def main():
     storageLocation = sys.argv[1]
     print("DATA LOCATION IN CLOUD STORAGE:")
     print(storageLocation)
+    num_rows = sys.argv[2]
+    print("NUM ROWS:")
+    print(num_rows)
+    partitions_requested = sys.argv[3]
+    print("PARTITIONS REQUESTED:")
+    print(partitions_requested)
+    min_lon = sys.argv[4]
+    print("MINIMUM LONGITUDE:")
+    print(min_lon)
+    max_lon = sys.argv[5]
+    print("MAX LONGITUDE:")
+    print(max_lon)
+    min_lat = sys.argv[6]
+    print("MINIMUM LATITUDE:")
+    print(min_lat)
+    max_lat = sys.argv[7]
+    print("MAXIMUM LATITUDE:")
+    print(max_lat)
 
     try:
         spark = SparkSession \
@@ -70,7 +88,7 @@ def main():
         print(e)
 
     try:
-        myDG = DataGen(spark)
+        myDG = DataGen(spark, num_rows, partitions_requested, min_lon, max_lon, min_lat, max_lat)
         print("DATAGEN CLASS INSTANTIATED SUCCESSFULLY")
         sparkDf = myDG.dataGen()
         print("DATA GENERATED SUCCESSFULLY")
