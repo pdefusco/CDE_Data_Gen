@@ -56,10 +56,16 @@ class GeospatialDataGen():
     Class to generate a sample dataset with geospatial types such as points, linestrings and polygons.
     """
 
-    def __init__(self, spark):
+    def __init__(self, spark, num_rows, partitions_requested, min_lon, max_lon, min_lat, max_lat):
         self.spark = spark
+        self.num_rows = num_rows
+        self.partitions_requested = partitions_requested
+        self.min_lon = min_lon
+        self.max_lon = max_lon
+        self.min_lat = min_lat
+        self.max_lat = max_lat
 
-    def datagen(self, num_rows, partitions_requested, min_lon, max_lon, min_lat, max_lat):
+    def datagen(self):
         """
         Method to create the sample dataset with geospatial types such as points, linestrings and polygons.
         """
@@ -75,9 +81,9 @@ class GeospatialDataGen():
             columns=[
                 dg.Column("unique_id", "string", minValue=1, maxValue=num_rows, step=1, prefix='ID', random=True),
                 dg.Column("cat_col", values=["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"])
-                dg.Column("point", dg.DataType.string, formatter=lambda: point_wkt_format.format(dg.randint(-180, 180), dg.randint(-90, 90))),
-                dg.Column("line", dg.DataType.string, formatter=lambda: line_wkt_format.format(",".join([f"{dg.randint(-180, 180)} {dg.randint(-90, 90)}" for _ in range(2)]))),
-                dg.Column("polygon", dg.DataType.string, formatter=lambda: polygon_wkt_format.format(",".join([f"{dg.randint(-180, 180)} {dg.randint(-90, 90)}" for _ in range(4)])))
+                dg.Column("point", dg.DataType.string, formatter=lambda: point_wkt_format.format(dg.randint(self.min_lon, self.max_lon), dg.randint(self.min_lat, self.max_lat))),
+                dg.Column("line", dg.DataType.string, formatter=lambda: line_wkt_format.format(",".join([f"{dg.randint(self.min_lon, self.max_lon)} {dg.randint(self.min_lat, self.max_lat)}" for _ in range(2)]))),
+                dg.Column("polygon", dg.DataType.string, formatter=lambda: polygon_wkt_format.format(",".join([f"{dg.randint(self.min_lon, self.max_lon)} {dg.randint(self.min_lat, self.max_lat)}" for _ in range(4)])))
             ]
         )
 
