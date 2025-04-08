@@ -77,7 +77,7 @@ class GeospatialDataGen():
         data_gen = dg.DataGenerator(
             spark,
             rows=num_rows,
-            partitions=partitions_requested
+            partitions=partitions_requested,
             columns=[
                 dg.Column("unique_id", "string", minValue=1, maxValue=num_rows, step=1, prefix='ID', random=True),
                 dg.Column("cat_col", values=["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"])
