@@ -57,18 +57,18 @@ class DataGen:
     def __init__(self, spark):
         self.spark = spark
 
-    def dataGen(self, shuffle_partitions_requested = 1000, partitions_requested = 1000, data_rows = 400000000):
+    def dataGen(self, shuffle_partitions_requested = 5000, partitions_requested = 5000, data_rows = 1000000000):
 
         # partition parameters etc.
         self.spark.conf.set("spark.sql.shuffle.partitions", shuffle_partitions_requested)
 
         dataSpec = (DataGenerator(self.spark, rows=data_rows, partitions=partitions_requested)
-                    .withColumn("unique_id", "string", minValue=1, maxValue=400000000, step=1, prefix='ID', random=True)
+                    .withColumn("unique_id", "string", minValue=1, maxValue=1000000000, step=1, prefix='ID', random=True)
                     .withColumn("col1", values=["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"]))
 
-        for i in range(2, 2000):
+        for i in range(2, 50000):
             col_n = f"col{i}"
-            dataSpec = dataSpec.withColumn(col_n, "float", minValue=1, maxValue=10000000, random=True)
+            dataSpec = dataSpec.withColumn(col_n, "float", minValue=1, maxValue=100000, random=True)
 
         df = dataSpec.build()
 
