@@ -80,7 +80,7 @@ class GeospatialDataGen():
             partitions=partitions_requested,
             columns=[
                 dg.Column("unique_id", "string", minValue=1, maxValue=num_rows, step=1, prefix='ID', random=True),
-                dg.Column("cat_col", values=["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"])
+                dg.Column("cat_col", values=["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"]),
                 dg.Column("point", dg.DataType.string, formatter=lambda: point_wkt_format.format(dg.randint(self.min_lon, self.max_lon), dg.randint(self.min_lat, self.max_lat))),
                 dg.Column("line", dg.DataType.string, formatter=lambda: line_wkt_format.format(",".join([f"{dg.randint(self.min_lon, self.max_lon)} {dg.randint(self.min_lat, self.max_lat)}" for _ in range(2)]))),
                 dg.Column("polygon", dg.DataType.string, formatter=lambda: polygon_wkt_format.format(",".join([f"{dg.randint(self.min_lon, self.max_lon)} {dg.randint(self.min_lat, self.max_lat)}" for _ in range(4)])))
