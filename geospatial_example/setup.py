@@ -88,7 +88,7 @@ def main():
         print(e)
 
     try:
-        myDG = DataGen(spark, num_rows, partitions_requested, min_lon, max_lon, min_lat, max_lat)
+        myDG = GeospatialDataGen(spark, num_rows, partitions_requested, min_lon, max_lon, min_lat, max_lat)
         print("DATAGEN CLASS INSTANTIATED SUCCESSFULLY")
         sparkDf = myDG.dataGen()
         print("DATA GENERATED SUCCESSFULLY")
